@@ -1,0 +1,100 @@
+-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script>
+
+        function fan(number){
+            var  display = document.querySelector(".display");
+      display.value += number;
+
+        };
+        function evale(){
+         let displayValue =   document.querySelector(".display").value;
+var result = eval(displayValue);
+document.querySelector(".display").value= result;
+        }
+        function clean() {
+            document.querySelector(".display").value= "";
+        }
+        function del() {
+            let result =   document.querySelector(".display");
+            result.value= result.value.slice(0,-1);
+        }
+
+        // Operator 
+       function ope(event){
+      let display = document.querySelector(".display").value;
+      var x = event.target.value;
+      let len = display.length-1;
+
+         let arr =['-', '+', '*', '/'];
+
+let reg = /[0-9]+/
+if (display.charAt(len).match(reg)) {
+    arr.filter(myFun=(val)=>{
+    //console.log(val);
+ 
+         if (val == x) {
+             console.log("true val == x");
+                if(x == display.charAt(len)) {
+           console.log(display.charAt(len));
+      }else{
+        document.querySelector(".display").value += x;
+      }
+    }
+
+ });//close filter
+    
+}
+}
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: aliceblue;">Calculator Project</h1>
+        <!-- //HEader Part -->
+<div class="header">
+    <input class="display" value="" type="text">
+</div>
+    <!-- //BODY Part -->
+    <div class="body">
+        <table >   
+<tr>
+    <td > <button class="saddam" value="7" onclick="fan('7')">7</button></td>
+    <td><button class="saddam" value="8" onclick="fan('8')">8</button></td>
+    <td><button class="saddam" value="9" onclick="fan('9')">9</button></td>
+    <td><button class="saddam" value=/ onclick="ope(event)">/</button></td>
+</tr>
+<tr>
+    <td><button class="saddam" value="4" onclick="fan('4')">4</button></td>
+    <td><button class="saddam" value="5" onclick="fan('5')">5</button></td>
+    <td><button class="saddam" value="6" onclick="fan('6')">6</button></td>
+    <td><button class="saddam" value="*" onclick="ope(event)">*</button></td>
+</tr>
+<tr>
+    <td><button class="saddam" value="1" onclick="fan('1')">1</button></td>
+    <td><button class="saddam" value="2" onclick="fan('2')">2</button></td>
+    <td><button class="saddam" value="3" onclick="fan('3')">3</button></td>
+    <td><button class="saddam" value="-" onclick="ope(event)">-</button></td>
+</tr>
+<tr>
+    <td><button class="saddam" value="0" onclick="fan('0')">0</button></td>
+    <td><button class="saddam" value="00" onclick="fan('00')">00</button></td>
+    <td><button class="saddam" value="." onclick="fan('.')">.</button></td>
+    <td><button class="saddam" value="+" onclick="ope(event)">+</button></td>
+</tr>
+<tr>
+    <td><button value="Clear" onclick="clean()">Clear</button></td> 
+    <td><button value="Del" onclick="del()">Del</button></td>  
+    <td colspan="2"><button class="clear" value="=" onclick="evale()">=</button></td>
+</tr>
+        </table>
+    </div><!-- class Body -->
+    </div>
+</body>
+</html>
