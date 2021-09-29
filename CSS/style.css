@@ -4,7 +4,8 @@
 body {
     padding: 100%;
     overflow: hidden;
-    background-image: linear-gradient(to right,rgb(0 45 255),rgb(104 28 152));
+    background-image: linear-gradient(to right,rgb(0 45 255 / 47%),rgb(104 28 152));
+    background-repeat: no-repeat;
 }
 
 .container{
@@ -38,5 +39,14 @@ table tr td button{
 }
 .clear{
     width: 120px;
+}
+@media only screen and (max-width: 600px) {
+    html{
+        font-size: 62.5%;
+      
+      } 
+
+
+
 }
 
