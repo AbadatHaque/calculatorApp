@@ -6,6 +6,7 @@ self.addEventListener('install', (e) => {
           '/index.html',
           '/CSS/style.css',
           '/images/Calculator_512.png',
+          '/manifest.json'
           // Add any other assets that should be cached
         ]);
       })
