@@ -3,21 +3,40 @@
 }
 body {
     overflow: hidden;
-    background-image: linear-gradient(to right,rgb(0 45 255 / 47%),rgb(104 28 152));
+    background: linear-gradient(to right, #1a1a2e, #16213e);
     background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.container{
+/* Dark Glass Effect */
+.container {
     overflow: hidden;
-    left: 50%;
     position: absolute;
+    left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: #00000030;
-    border-radius: 10px;
-    padding: 25px;
-    box-shadow: 0 20px 20px rgb(27 24 24), 0px 0px 50px black;
+    background: rgba(10, 10, 20, 0.6);
+    border-radius: 12px;
+    padding: 30px;
+    backdrop-filter: blur(6px);
+    box-shadow: 
+        0px 10px 25px rgba(0, 0, 0, 0.5), 
+        0px 0px 40px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+    .container {
+        /* width: 90%; */
+        padding: 20px;
+    }
+}
+
+
 .header input{
     width: 280px;
     height: 50px;
@@ -39,6 +58,7 @@ table tr td button{
    border-radius: 20px;
    margin: 5px;
    cursor: pointer;
+   border: 2px solid ;
 }
 .clear{
     width: 120px;
