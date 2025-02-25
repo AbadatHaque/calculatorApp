@@ -9,14 +9,58 @@
     <link rel="icon" type="image/svg+xml" href="./images/Calculator_512.png" />
     <title>Calculator</title>
     <link rel="stylesheet" href="CSS/style.css">
-    <!-- <link rel="manifest" href="./manifest.json"> -->
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="./manifest.json" />
+</head>
 
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * 'self' data: 'unsafe-inline' 'unsafe-eval'"> -->
-    
-
+<body>
+    <div class="container">
+        <h1 style="color: aliceblue;">Calculator Project</h1>
+        <!-- //HEader Part -->
+        <div class="header">
+            <input readonly class="display" value="" type="text">
+        </div>
+        <!-- //BODY Part -->
+        <div class="body">
+            <table>
+                <tr>
+                    <td> <button class="saddam" value="7" onclick="fan('7')">7</button></td>
+                    <td><button class="saddam" value="8" onclick="fan('8')">8</button></td>
+                    <td><button class="saddam" value="9" onclick="fan('9')">9</button></td>
+                    <td><button class="saddam" value=/ onclick="ope(event)">/</button></td>
+                </tr>
+                <tr>
+                    <td><button class="saddam" value="4" onclick="fan('4')">4</button></td>
+                    <td><button class="saddam" value="5" onclick="fan('5')">5</button></td>
+                    <td><button class="saddam" value="6" onclick="fan('6')">6</button></td>
+                    <td><button class="saddam" value="*" onclick="ope(event)">*</button></td>
+                </tr>
+                <tr>
+                    <td><button class="saddam" value="1" onclick="fan('1')">1</button></td>
+                    <td><button class="saddam" value="2" onclick="fan('2')">2</button></td>
+                    <td><button class="saddam" value="3" onclick="fan('3')">3</button></td>
+                    <td><button class="saddam" value="-" onclick="ope(event)">-</button></td>
+                </tr>
+                <tr>
+                    <td><button class="saddam" value="0" onclick="fan('0')">0</button></td>
+                    <td><button class="saddam" value="00" onclick="fan('00')">00</button></td>
+                    <td><button class="saddam" value="." onclick="fan('.')">.</button></td>
+                    <td><button class="saddam" value="+" onclick="ope(event)">+</button></td>
+                </tr>
+                <tr>
+                    <td><button value="Clear" onclick="clean()">Clear</button></td>
+                    <td><button value="Del" onclick="del()">Del</button></td>
+                    <td colspan="2"><button class="clear" value="=" onclick="evale()">=</button></td>
+                </tr>
+            </table>
+        </div><!-- class Body -->
+        <!-- Install Button -->
+    </div>
 
     <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(() => console.log("Service Worker Registered"));
+        }
 
         function fan(number) {
             var display = document.querySelector(".display");
@@ -62,85 +106,7 @@
 
             }
         }
-    </script>
-</head>
-
-<body>
-    <div class="container">
-        <h1 style="color: aliceblue;">Calculator Project</h1>
-        <!-- //HEader Part -->
-        <div class="header">
-            <input class="display" value="" type="text">
-        </div>
-        <!-- //BODY Part -->
-        <div class="body">
-            <table>
-                <tr>
-                    <td> <button class="saddam" value="7" onclick="fan('7')">7</button></td>
-                    <td><button class="saddam" value="8" onclick="fan('8')">8</button></td>
-                    <td><button class="saddam" value="9" onclick="fan('9')">9</button></td>
-                    <td><button class="saddam" value=/ onclick="ope(event)">/</button></td>
-                </tr>
-                <tr>
-                    <td><button class="saddam" value="4" onclick="fan('4')">4</button></td>
-                    <td><button class="saddam" value="5" onclick="fan('5')">5</button></td>
-                    <td><button class="saddam" value="6" onclick="fan('6')">6</button></td>
-                    <td><button class="saddam" value="*" onclick="ope(event)">*</button></td>
-                </tr>
-                <tr>
-                    <td><button class="saddam" value="1" onclick="fan('1')">1</button></td>
-                    <td><button class="saddam" value="2" onclick="fan('2')">2</button></td>
-                    <td><button class="saddam" value="3" onclick="fan('3')">3</button></td>
-                    <td><button class="saddam" value="-" onclick="ope(event)">-</button></td>
-                </tr>
-                <tr>
-                    <td><button class="saddam" value="0" onclick="fan('0')">0</button></td>
-                    <td><button class="saddam" value="00" onclick="fan('00')">00</button></td>
-                    <td><button class="saddam" value="." onclick="fan('.')">.</button></td>
-                    <td><button class="saddam" value="+" onclick="ope(event)">+</button></td>
-                </tr>
-                <tr>
-                    <td><button value="Clear" onclick="clean()">Clear</button></td>
-                    <td><button value="Del" onclick="del()">Del</button></td>
-                    <td colspan="2"><button class="clear" value="=" onclick="evale()">=</button></td>
-                </tr>
-            </table>
-        </div><!-- class Body -->
-        <!-- Install Button -->
-        <button id="installButton" style="display: none;">Install App</button>
-    </div>
-
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js")
-                .then(() => console.log("Service Worker Registered"));
-        }
-
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
-            // Save the event so it can be triggered later
-            deferredPrompt = e;
-
-            // Show your own install button, or use this code to trigger the prompt:
-            const installButton = document.getElementById('installButton');
-            installButton.style.display = 'block';
-
-            installButton.addEventListener('click', () => {
-                // Show the install prompt
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the A2HS prompt');
-                    } else {
-                        console.log('User dismissed the A2HS prompt');
-                    }
-                    deferredPrompt = null;
-                });
-            });
-        });
+      
 
     </script>
 </body>
