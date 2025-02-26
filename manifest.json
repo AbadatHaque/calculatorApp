@@ -3,8 +3,10 @@
     "short_name": "Calculator App",
     "start_url": "/",
     "display": "standalone",
+    "display_override": ["fullscreen", "minimal-ui"],
     "background_color": "#ffffff",
     "theme_color": "#000000",
+    "id": "myapp/v2",
     "icons": [
       {
         "src": "/icons/Calculator_192.png",
