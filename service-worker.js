@@ -9,7 +9,7 @@ self.addEventListener('install', (e) => {
         '/CSS/style.css',
         '/images/Calculator_512.png',
         '/manifest.json',
-        '/offline.html' // Consider adding an offline page
+        // '/offline.html' // Consider adding an offline page
       ]);
     })
   );
