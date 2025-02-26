@@ -9,6 +9,13 @@
     <link rel="icon" type="image/svg+xml" href="./images/Calculator_512.png" />
     <title>Calculator</title>
     <link rel="stylesheet" href="CSS/style.css">
+
+    <script> 
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(() => console.log("Service Worker Registered"));
+        }
+    </script>
     <link rel="manifest" href="/manifest.json?v=1.0">
 
 </head>
@@ -58,10 +65,7 @@
     </div>
 
     <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js")
-                .then(() => console.log("Service Worker Registered"));
-        }
+      
 
         // Custom findLastIndex function
         Array.prototype.findLastIndex = function (callback) {
