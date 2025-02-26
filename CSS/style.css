@@ -119,8 +119,9 @@ button:hover {
 @media only screen and (max-width: 420px) {
     .container {
         height: 100vh;
-        width: 100vw;
+        width: 500px;
         margin: 0;
+        background: linear-gradient(to right, #1a1a2e, #16213e);
     }
     table{
         margin-top: 2rem;
