@@ -41,26 +41,3 @@ self.addEventListener('fetch', (e) => {
     })
   );
 });
-self.addEventListener('fetch', (e) => {
-  // Check if the request is for the manifest.json file
-  if (e.request.url.includes('/manifest.json')) {
-    e.respondWith(
-      fetch(e.request).then((response) => {
-        // Clone the response so we can cache it
-        const responseToCache = response.clone();
-        // Cache the response
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(e.request, responseToCache);
-        });
-        // Return the fresh response to the browser
-        return response;
-      })
-    );
-  } else {
-    e.respondWith(
-      caches.match(e.request).then((cachedResponse) => {
-        return cachedResponse || fetch(e.request);
-      })
-    );
-  }
-});
