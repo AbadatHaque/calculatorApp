@@ -28,7 +28,7 @@ body {
         0px 0px 40px rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    max-width: 42rem; /* Prevent container from stretching too much */
+    max-width: 340px; /* Prevent container from stretching too much */
     /* height: 100%; Ensure it fills the screen height */
 }
 
@@ -119,10 +119,10 @@ button:hover {
 @media only screen and (max-width: 420px) {
     .container {
         height: 100vh;
-        width: 500px;
+        width: 100vw;
         margin: 0;
         background: linear-gradient(to right, #1a1a2e, #16213e);
-        max-width:'42rem'
+        max-width:'100%'
     }
     table{
         margin-top: 2rem;
