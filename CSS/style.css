@@ -28,8 +28,8 @@ body {
         0px 0px 40px rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    max-width: 400px; /* Prevent container from stretching too much */
-    height: 100%; /* Ensure it fills the screen height */
+    max-width: 340px; /* Prevent container from stretching too much */
+    /* height: 100%; Ensure it fills the screen height */
 }
 
 /* Header input */
@@ -54,6 +54,8 @@ table tr {
     /* flex-direction: row; */
     width: 100%;
     justify-content: space-between;
+    gap: .8rem;
+    margin: .5rem 0px;
 }
 
 table tr td {
