@@ -4,31 +4,109 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="./images/Calculator_512.png" />
     <title>Calculator</title>
     <link rel="stylesheet" href="CSS/style.css">
 
-
     <script>
-        // Registering service worker (unchanged)
+        let deferredPrompt; // Variable to hold the event
+
+        // Registering service worker
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("service-worker.js")
                 .then(() => console.log("Service Worker Registered"));
         }
+
+        // Listen for beforeinstallprompt event
+        window.addEventListener("beforeinstallprompt", (event) => {
+            // Prevent the default prompt
+            event.preventDefault();
+            // Save the event so it can be triggered later
+            deferredPrompt = event;
+            // Show the custom modal
+            showInstallModal();
+        });
+
+        // Function to show the modal
+        function showInstallModal() {
+            const modal = document.getElementById("install-modal");
+            modal.style.display = "block"; // Show the modal
+        }
+
+        // Function to hide the modal
+        function hideInstallModal() {
+            const modal = document.getElementById("install-modal");
+            modal.style.display = "none"; // Hide the modal
+        }
+
+        // Function to trigger the installation of the PWA
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); // Show the installation prompt
+                deferredPrompt.userChoice
+                    .then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the installation prompt');
+                        } else {
+                            console.log('User dismissed the installation prompt');
+                        }
+                        deferredPrompt = null; // Clear the deferred prompt
+                        hideInstallModal(); // Hide the modal after installation
+                    });
+            }
+        }
+
+        // Function to dismiss the installation prompt
+        function dismissInstall() {
+            hideInstallModal(); // Hide the modal without installing
+        }
     </script>
-    <link rel="manifest" href="/manifest.json?v=2.0">
+
+    <style>
+        /* Modal styles */
+        #install-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            margin: 0 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+
 </head>
 
 <body>
     <div class="container">
         <h1 style="color: aliceblue;">Calculator Project</h1>
-        <!-- //HEader Part -->
+        <!-- Header Part -->
         <div class="header">
             <input readonly class="display" value="" type="text">
         </div>
-        <!-- //BODY Part -->
+
+        <!-- Body Part -->
         <div class="body">
             <table>
                 <tr>
@@ -61,96 +139,92 @@
                     <td colspan="2"><button class="clear" value="=" onclick="evale()">=</button></td>
                 </tr>
             </table>
-        </div><!-- class Body -->
+        </div>
+
+        <audio id="button-sound">
+            <source src="sounds/sound1.wav" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+
+        <script>
+            // Custom function to play sound
+            function playSound() {
+                const sound = document.getElementById("button-sound");
+                sound.play().catch((error) => {
+                    console.error("Error playing sound:", error);
+                });
+            }
+
+            function fan(number) {
+                var display = document.querySelector(".display");
+                if (!display.value && !parseInt(number)) {
+                    display.value = '0.';
+                } else if (number == '.') {
+                    const arr = display.value.split('');
+                    const lastIndex = arr.findLastIndex((num) => ['-', '+', '/', '*'].includes(num));
+                    lastValueAfterOp = arr.slice(lastIndex, arr.length - 1);
+                    if ((lastValueAfterOp.includes('.') && lastIndex != -1) || (arr.includes('.') && lastIndex == -1)) {
+                        return;
+                    }
+                    display.value += number;
+                } else {
+                    display.value += number;
+                }
+                playSound();
+            }
+
+            function evale() {
+                let displayValue = document.querySelector(".display").value;
+                var result = eval(displayValue);
+                document.querySelector(".display").value = result;
+                playSound();
+            }
+
+            function clean() {
+                document.querySelector(".display").value = "";
+                playSound();
+            }
+
+            function del() {
+                let result = document.querySelector(".display");
+                result.value = result.value.slice(0, -1);
+                playSound();
+            }
+
+            function ope(event) {
+                let display = document.querySelector(".display").value;
+                var x = event.target.value;
+                let len = display.length - 1;
+                let arr = ['-', '+', '*', '/'];
+                let reg = /[0-9]+/;
+                if (display.charAt(len).match(reg)) {
+                    arr.filter(myFun = (val) => {
+                        if (val == x) {
+                            if (x == display.charAt(len)) {
+                            } else {
+                                document.querySelector(".display").value += x;
+                            }
+                        }
+                    });
+                    playSound();
+                }
+            }
+        </script>
+
     </div>
 
+    <!-- Install Modal -->
+    <div id="install-modal">
+        <div class="modal-content">
+            <h2>Install PWA</h2>
+            <p>Would you like to install this app?</p>
+            <div class="modal-buttons">
+                <button onclick="installPWA()">Yes</button>
+                <button onclick="dismissInstall()">No</button>
+            </div>
+        </div>
+    </div>
 
-    <audio id="button-sound">
-        <!-- <source src="sounds/sound.wav" type="audio/wav"> -->
-        <source src="sounds/sound1.wav" type="audio/wav">
-
-        Your browser does not support the audio element.
-    </audio>
-    
-    
-    
-    <script>
-        // Custom findLastIndex function
-        Array.prototype.findLastIndex = function (callback) {
-            const reversedArr = [...this].reverse(); // Create a reversed copy of the array
-            const index = reversedArr.findIndex(callback); // Use findIndex on the reversed array
-            return index === -1 ? -1 : this.length - index - 1; // Adjust index for the original array 
-        }
-
-        // Function to play sound when key is pressed
-
-        function playSound() {
-            const sound = document.getElementById("button-sound");
-            sound.play().catch((error) => {
-                console.error("Error playing sound:", error);
-            });
-        }
-      
-        function fan(number) {
-            var display = document.querySelector(".display");
-            if (!display.value && !parseInt(number)) {
-                display.value = '0.';
-            } else if (number == '.') {
-                const arr = display.value.split('');
-                const lastIndex = arr.findLastIndex((num) => ['-', '+', '/', '*'].includes(num));
-                lastValueAfterOp = arr.slice(lastIndex, arr.length - 1);
-                if ((lastValueAfterOp.includes('.') && lastIndex != -1) || (arr.includes('.') && lastIndex == -1)) {
-                    return;
-                }
-                display.value += number;
-            } else {
-                display.value += number;
-            }
-
-            playSound(); // Play sound after the button is clicked
-        };
-
-        function evale() {
-            let displayValue = document.querySelector(".display").value;
-            var result = eval(displayValue);
-            document.querySelector(".display").value = result;
-            playSound(); // Play sound after evaluation
-        }
-
-        function clean() {
-            document.querySelector(".display").value = "";
-            playSound(); // Play sound when clearing
-        }
-
-        function del() {
-            let result = document.querySelector(".display");
-            result.value = result.value.slice(0, -1);
-            playSound(); // Play sound when deleting a character
-        }
-
-        // Operator
-        function ope(event) {
-            let display = document.querySelector(".display").value;
-            var x = event.target.value;
-            let len = display.length - 1;
-
-            let arr = ['-', '+', '*', '/'];
-
-            let reg = /[0-9]+/
-            if (display.charAt(len).match(reg)) {
-                arr.filter(myFun = (val) => {
-                    if (val == x) {
-                        if (x == display.charAt(len)) {
-                        } else {
-                            document.querySelector(".display").value += x;
-                        }
-                    }
-                });//close filter
-                playSound(); // Play sound when operator is pressed
-            }
-        }
-
-    </script>
 </body>
 
 </html>
