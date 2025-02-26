@@ -62,11 +62,34 @@
                 .then(() => console.log("Service Worker Registered"));
         }
 
+        // Custom findLastIndex function
+        Array.prototype.findLastIndex = function (callback) {
+            const reversedArr = [...this].reverse(); // Create a reversed copy of the array
+            const index = reversedArr.findIndex(callback); // Use findIndex on the reversed array
+            return index === -1 ? -1 : this.length - index - 1; // Adjust index for the original array 
+        }
+
         function fan(number) {
             var display = document.querySelector(".display");
-            display.value += number;
+            console.log(display.value.split(''), display.value.split('').includes('.'))
+            if (!display.value && !parseInt(number)) {
+                display.value = '0.';
+            } else if (number == '.') {
+                const arr = display.value.split('');
+                const lastIndex = arr.findLastIndex((num) => ['-', '+', '/', '*'].includes(num));
+                lastValueAfterOp = arr.slice(lastIndex, arr.length - 1);
+                if ((lastValueAfterOp.includes('.') && lastIndex != -1) || (arr.includes('.') && lastIndex == -1)) {
+
+                    return;
+                }
+                display.value += number;
+
+            } else {
+                display.value += number;
+            }
 
         };
+
         function evale() {
             let displayValue = document.querySelector(".display").value;
             var result = eval(displayValue);
@@ -106,7 +129,7 @@
 
             }
         }
-      
+
 
     </script>
 </body>
