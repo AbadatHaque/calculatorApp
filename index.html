@@ -23,7 +23,7 @@
 
 <body>
     <div class="container">
-        <h1 style="color: aliceblue;">Calculator Project</h1>
+        <h1 style="color: aliceblue;">SK Calculator</h1>
         <!-- //HEader Part -->
         <div class="header">
             <input readonly class="display" value="" type="text">
@@ -112,6 +112,9 @@
 
         function evale() {
             let displayValue = document.querySelector(".display").value;
+            if(!displayValue){
+                return;
+            }
             var result = eval(displayValue);
             document.querySelector(".display").value = result;
             playSound(); // Play sound after evaluation
